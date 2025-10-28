@@ -16,6 +16,10 @@ body{
     overflow-x: hidden;
 }
 
+body.menu-open{
+    overflow: hidden;
+}
+
 ::-webkit-scrollbar{
     width: 10px;
 }
@@ -66,7 +70,15 @@ nav{
     color: white;
     opacity: 0;
     pointer-events: none;
-    font-size: clamp(2.5rem, 0.5rem + 5 vw, 3rem);
+    font-size: clamp(2.5rem, 0.5rem + 5vw, 3rem);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.hamburg:hover,
+.cancel:hover{
+    color: #b75b4b;
+    transform: scale(1.1);
 }
 
 .nav-container .links{
@@ -104,17 +116,18 @@ nav{
 
 .dropdown{
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     top: 0;
-    transform: translateY(-500px);
+    left: 0;
+    transform: translateY(-100%);
     width: 100%;
     height: auto;
     backdrop-filter: blur(4px) brightness(40%);
     box-shadow: 0 0 20px black;
-    transition: 0.2s linear;
+    transition: transform 0.25s ease;
 }
 
-.dropdown.link a{
+.dropdown .link a{
     display: flex;
     color: white;
     text-decoration: none;
@@ -124,13 +137,17 @@ nav{
     transition: 0.2s linear;
 }
 
-.dropdown.link a:hover{
+.dropdown.open{
+    transform: translateY(0);
+}   
+
+.dropdown .link a:hover{
     background-color: #b75b4b;
 }
 
 section{
     width: 100%;
-    min-width: 90vh;
+    min-height: 90vh;
 }
 
 section .main-container{
@@ -179,11 +196,12 @@ section .main-container{
     font-size: clamp(1rem, 1rem + 5vw, 1.8rem);
 }
 
-content h1 span{
+.content h1 span{
     color: #b75b4b;
     text-shadow: 0 0 10px #b75b4b;
 }
-content .typewriter{
+
+.content .typewriter{
     font-size: clamp(1rem, 1rem + 5vw, 2.5rem);
     font-weight: 600;
 }
@@ -195,6 +213,7 @@ content .typewriter{
 
 .content p{
     font-size: clamp(0.4rem, 0.2rem + 9vw, 1rem);
+    color: white;
     margin: 10px;
 }
 
@@ -233,6 +252,11 @@ content .typewriter{
     font-weight: 700;
     border-radius: 5px;
     transition: 0.2s linear;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 .content button:hover{
@@ -327,12 +351,21 @@ section .button button{
     border: 2px solid transparent;
     cursor: pointer;
     transition: all 0.4s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
 }
 
 section .button button:hover{
     border-color:#b75b4b;
     background-color: #fff;
     color: #b75b4b;
+}
+
+section .button button a{
+    text-decoration: none;
+    color: inherit;
 }
 
 .skills{
@@ -345,7 +378,7 @@ section .button button:hover{
 .skills .skills-details{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .skills-details .text{
@@ -381,21 +414,35 @@ section .button button:hover{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-content: flex-start;
 }
 
 .skills-details .box{
-    width: calc(100% / 2-20px);
-    margin: 20px 0;
+    width: calc(100% / 2 - 20px);
+    margin: 10px 0;
+    padding: 15px;
+    background: rgba(183, 91, 75, 0.1);
+    border: 1px solid rgba(183, 91, 75, 0.3);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.skills-details .box:hover{
+    background: rgba(183, 91, 75, 0.2);
+    border-color: #b75b4b;
+    transform: translateY(-5px);
 }
 
 .skills-details .boxes .topic{
-    font-size: 20px;
+    font-size: 18px;
     color: #b75b4b;
+    margin-bottom: 5px;
 }
 
-.skills-details .boxes .per{
-    font-size: 60px;
+.skills-details .boxes .per{    
+    font-size: 2rem;
     color: #b75b4b;
+    font-weight: 600;
 }
 
 .services .boxes{
@@ -434,3 +481,74 @@ section .button button:hover{
     transition: all
 }
 
+footer{
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.contact-info{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer a{
+    color: #b75b4b;
+    text-shadow: 0 0 10px #b75b4b;
+}
+
+@media (max-width: 900px){
+    .nav-container{
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .hamburg{
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .nav-container .links{
+        display: none;
+    }
+
+    /* Show/hide cancel button when menu is open */
+    .cancel{
+        opacity: 0;
+        pointer-events: none;
+    }
+    body.menu-open .cancel{
+        opacity: 1;
+        pointer-events: auto;
+    }
+    body.menu-open .hamburg{
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    /* Stack hero section */
+    section .main-container{
+        flex-direction: column-reverse;
+        align-items: center;
+        padding: 20px;
+        text-align: center;
+    }
+    .main-container .content{
+        width: 100%;
+    }    
+    .main-container .image{
+        width: min(70vw, 420px);
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+    .content button{
+        width: 100%;
+        margin: 20px 0 0 0;
+    }
+}
