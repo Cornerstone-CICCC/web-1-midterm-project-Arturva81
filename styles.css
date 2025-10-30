@@ -514,39 +514,43 @@ footer a{
         opacity: 1;
         pointer-events: auto;
     }
+    
     .nav-container .links{
         display: none;
     }
 
-    /* Show/hide cancel button when menu is open */
     .cancel{
         opacity: 0;
         pointer-events: none;
     }
+    
     body.menu-open .cancel{
         opacity: 1;
         pointer-events: auto;
     }
+    
     body.menu-open .hamburg{
         opacity: 0;
         pointer-events: none;
     }
     
-    /* Stack hero section */
     section .main-container{
         flex-direction: column-reverse;
         align-items: center;
         padding: 20px;
         text-align: center;
     }
+    
     .main-container .content{
         width: 100%;
     }    
+    
     .main-container .image{
         width: min(70vw, 420px);
         height: auto;
         aspect-ratio: 1 / 1;
     }
+    
     .content button{
         width: 100%;
         margin: 20px 0 0 0;
